@@ -1,0 +1,32 @@
+<div>
+    <h2>Upload zip files</h2>
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" formControlName="name"></td>
+            </tr>
+            <tr>
+                <td>Title:</td>
+                <td><input type="text" formControlName="title"></td>
+            </tr>
+            <tr>
+                <td>Comments:</td>
+                <td><textarea formControlName="comments" placeholder="Comments" required></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>Archive:</td>
+                <td><input type="file" (change)="onFileChange($event)" required></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" (click)="cancelForm()">Cancel</button>
+                </td>
+                <td>
+                    <button type="submit" [disabled]="form.invalid">Submit</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
