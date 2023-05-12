@@ -1,0 +1,14 @@
+.bundle-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .bundle-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    margin-bottom: 10px;
+  }
+  

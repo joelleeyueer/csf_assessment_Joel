@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable, firstValueFrom } from "rxjs";
-import { Details } from "./model/model";
+import { Details, PhotoMain } from "./model/model";
 
 
 @Injectable({
@@ -38,6 +38,10 @@ export class UploadService {
     return firstValueFrom<any>(this.http.get<any>(url));
   }
 
+  getAllBundles(): Observable<PhotoMain[]> {
+    const url = `${this.apiURI}/bundles`;
+    return this.http.get<PhotoMain[]>(url);
+}
 
   
 }

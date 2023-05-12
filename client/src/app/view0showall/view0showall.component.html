@@ -1,0 +1,15 @@
+<div>
+    <h1>Photo Storage</h1>
+    
+    <button (click)="goToUpload()">Upload</button>
+
+    <br>
+  
+    <table class="bundle-table">
+      <tr *ngFor="let bundle of bundleList">
+        <td>{{ bundle.title }}</td>
+        <td>{{ bundle.date }}</td>
+      </tr>
+    </table>
+  </div>
+  

@@ -12,5 +12,10 @@ export interface Bundle {
     name: string;
     comments: string;
     urls: string[];
-  }
+}
+
+export interface PhotoMain {
+    title: string;
+    date: string;
+}
   

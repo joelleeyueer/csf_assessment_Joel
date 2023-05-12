@@ -1,10 +1,12 @@
 package ibf2022.batch2.csf.backend.repositories;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -118,8 +120,31 @@ public class ArchiveRepository {
 	// Write the native mongo query that you will be using in this method
 	//
 	//
-	public Object getBundles(/* any number of parameters here */) {
-		return null;
+	public JsonArray getBundles() {
+		Criteria criteria = Criteria.where("bundleId").exists(true);
+		Query query = Query.query(criteria).with(Sort.by(Sort.Direction.ASC,"date"));
+		List<Document> outgoingDocuments = mongoTemplate.find(query, Document.class, "archives");
+		JsonArray outgoingJsonObject = generateJsonObject(outgoingDocuments);
+		return outgoingJsonObject;
+	}
+
+	private JsonArray generateJsonObject(List<Document> outgoingDocuments) {
+		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	
+		for (Document document : outgoingDocuments) {
+			String title = document.getString("title");
+			Date date = document.getDate("date");
+			String formattedDate = dateFormat.format(date);
+	
+			JsonObjectBuilder bundleBuilder = Json.createObjectBuilder()
+					.add("title", title)
+					.add("date", formattedDate);
+	
+			jsonArrayBuilder.add(bundleBuilder);
+		}
+	
+		return jsonArrayBuilder.build();
 	}
 
 

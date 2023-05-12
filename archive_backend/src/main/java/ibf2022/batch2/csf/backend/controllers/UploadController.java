@@ -23,6 +23,7 @@ import ibf2022.batch2.csf.backend.models.Archives;
 import ibf2022.batch2.csf.backend.repositories.ArchiveRepository;
 import ibf2022.batch2.csf.backend.repositories.ImageRepository;
 import ibf2022.batch2.csf.backend.services.FileVerificationService;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 
 @RestController
@@ -97,6 +98,18 @@ public class UploadController {
 			return ResponseEntity.status(HttpStatus.OK).body(incomingArchive.toString());
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bundle archive for "+ bundleID + " not found");
+		}
+	}
+
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/bundles")
+	public ResponseEntity<String> getBundles() {
+		JsonArray incomingBundle = archiveRepository.getBundles();
+
+		if (incomingBundle != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(incomingBundle.toString());
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No bundle archives found");
 		}
 	}
 }

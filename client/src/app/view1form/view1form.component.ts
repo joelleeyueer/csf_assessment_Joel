@@ -53,6 +53,8 @@ export class View1formComponent implements OnInit {
   
   cancelForm(): void {
     this.form.reset();
+    this.router.navigate(['/bundles']);
+
   }
 
   private createForm(): void {
