@@ -22,22 +22,16 @@ export class View1formComponent implements OnInit {
 
   submitForm(): void {
     if (this.form.valid) {
-      const formData = new FormData();
-      formData.append('name', this.form.get('name')?.value);
-      formData.append('title', this.form.get('title')?.value);
-      formData.append('comments', this.form.get('comments')?.value);
-      formData.append('archive', this.form.get('archive')?.value);
+      const details: Details = {
+        name: this.form.get('name')?.value,
+        title: this.form.get('title')?.value,
+        comments: this.form.get('comments')?.value,
+        archive: this.form.get('archive')?.value
+      };
   
-      this.uploadService.uploadFile(formData).subscribe(res => {
-        console.log(res);
-        this.form.reset();
-      }, error => {
-        console.log('Form submission error:', error);
-      });
-    } else {
-      console.log('Form is not valid');
-    }
+      this.uploadService.uploadFile(details);
   }
+}
 
 
   onFileChange(event: Event): void {
