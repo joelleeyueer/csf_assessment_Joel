@@ -29,7 +29,16 @@ export class View1formComponent implements OnInit {
         archive: this.form.get('archive')?.value
       };
   
-      this.uploadService.uploadFile(details);
+      this.uploadService.uploadFile(details).then(
+        (response) => {
+          console.log(response);
+          this.router.navigate(['/bundle', response.bundleId]);
+        },
+        (error) => {
+          alert('There was an error in file upload. Please try again.');
+          console.error(error);
+        }
+      )
   }
 }
 

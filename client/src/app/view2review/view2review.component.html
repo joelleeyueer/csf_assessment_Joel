@@ -1,0 +1,20 @@
+<div>
+    <h2>{{ bundle.title }}</h2>
+    <br>
+    <p>by {{ bundle.name }} on {{ bundle.date }}</p>
+    <br>
+    <p>{{ bundle.comments }}</p>
+    <br>
+    <div *ngFor="let url of bundle.urls">
+      <img [src]="url" alt="Image">
+      <br>
+    </div>
+  
+</div>
+<div>
+    <a [routerLink]="['/']">
+        <button type="button">Back</button>
+    </a>
+</div>
+
+  

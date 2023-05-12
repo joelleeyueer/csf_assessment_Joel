@@ -20,9 +20,24 @@ export class UploadService {
     outgoingForm.append('comments', details.comments);
     outgoingForm.append('archive', details.archive);
 
-    firstValueFrom(this.http.post(this.apiURI + '/upload', outgoingForm))
-          .then(() => console.log('File uploaded successfully'))
-          .catch(err => console.error('Error occurred while uploading file: ' + err));
+    return firstValueFrom(
+      this.http.post<any>(this.apiURI + '/upload', outgoingForm)
+    )
+      .then(response => {
+        console.log('File uploaded successfully');
+        return response;
+      })
+      .catch(err => {
+        console.error('Error occurred while uploading file: ' + err);
+        throw err; // Re-throw the error so it can be caught by the caller
+      });
   }
+
+  async getBundleByBundleId(bundleId: string): Promise<any> {
+    const url = `${this.apiURI}/bundle/${bundleId}`;
+    return firstValueFrom<any>(this.http.get<any>(url));
+  }
+
+
   
 }
