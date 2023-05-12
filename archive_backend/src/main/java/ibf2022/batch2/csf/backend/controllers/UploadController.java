@@ -7,6 +7,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import ibf2022.batch2.csf.backend.models.Archives;
+import ibf2022.batch2.csf.backend.repositories.ArchiveRepository;
 import ibf2022.batch2.csf.backend.repositories.ImageRepository;
 import ibf2022.batch2.csf.backend.services.FileVerificationService;
+import jakarta.json.JsonObject;
 
 @RestController
 public class UploadController {
@@ -28,6 +31,9 @@ public class UploadController {
 
 	@Autowired
 	private ImageRepository imageRepository;
+
+	@Autowired
+	private ArchiveRepository archiveRepository;
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -67,10 +73,16 @@ public class UploadController {
 		incomingArchives.setName(name);
 		incomingArchives.setComments(comments);
 
+		JsonObject bundleIDJson = archiveRepository.recordBundle(incomingArchives);
 
-		return ResponseEntity.ok("File and data uploaded successfully");
+		if (bundleIDJson != null) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(bundleIDJson.toString());
 		} else {
-		return ResponseEntity.badRequest().body("No file uploaded");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading file");
+		}
+
+		} else {
+			return ResponseEntity.badRequest().body("No file uploaded");
 		}
 	}
 }

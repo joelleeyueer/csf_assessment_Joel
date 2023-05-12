@@ -26,6 +26,8 @@ public class ArchiveRepository {
 	//
 	public JsonObject recordBundle(Archives incomingArchives) {
 
+		System.out.println("in recordBundle");
+
 		Document outgoingDocument = new Document()
 		.append("bundleId", incomingArchives.getBundleId())
 		.append("date", incomingArchives.getDate())
