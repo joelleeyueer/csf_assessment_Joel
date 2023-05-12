@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import ibf2022.batch2.csf.backend.models.Archives;
 import ibf2022.batch2.csf.backend.services.UploadToS3Service;
 
 @Repository
@@ -17,7 +18,8 @@ public class ImageRepository {
 	//TODO: Task 3
 	// You are free to change the parameter and the return type
 	// Do not change the method's name
-	public void upload(MultipartFile incomingZMultipartFile) throws IOException{
-		uploadToS3Service.unzipFile(incomingZMultipartFile);
+	public Archives upload(MultipartFile incomingZMultipartFile) throws IOException{
+		Archives incomingArchives = uploadToS3Service.upzipAndUpload(incomingZMultipartFile);
+		return incomingArchives;
 	}
 }

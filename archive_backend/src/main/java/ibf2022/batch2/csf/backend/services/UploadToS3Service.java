@@ -4,7 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -18,6 +20,8 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
+import ibf2022.batch2.csf.backend.models.Archives;
+
 @Service
 public class UploadToS3Service {
 
@@ -27,7 +31,16 @@ public class UploadToS3Service {
     @Value("${aws.s3.bucketName}")
     private String bucketName;
 
-    public void unzipFile(MultipartFile incomingFile) throws IOException{
+    @Value("${do.spaces.region}")
+    private String region;
+
+    public Archives upzipAndUpload(MultipartFile incomingFile) throws IOException{
+
+        Archives archives = new Archives();
+
+        archives.setBundleId(generateUUID());
+        archives.setDate(LocalDate.now());
+        
 
         HashSet<String> fileNameSet = new HashSet<>();
         byte[] buffer = new byte[1024];
@@ -67,6 +80,8 @@ public class UploadToS3Service {
 
                     // Call uploadToS3 method passing fileBytes and metadata
                     uploadToS3(new ByteArrayInputStream(incomingFileBytes), currentPhotoMetadata, fileName);
+                    String incomingUrl = generateImageUrl(fileName);
+                    archives.addImageUrl(incomingUrl);
 
                     bAOS.close();
                 }
@@ -74,6 +89,8 @@ public class UploadToS3Service {
 
             }
         }
+
+        return archives;
     }
 
     private String getContentType(String fileExtension) {
@@ -99,6 +116,19 @@ public class UploadToS3Service {
             System.out.println("Exception: " + e.getMessage());
         }
     }
+
+    private String generateImageUrl(String fileName) {
+        String imageUrl = "https://" + bucketName + "." + s3Client.getRegionName() + ".digitaloceanspaces.com/" + fileName;
+        System.out.println("Image URL: " + imageUrl);
+        return imageUrl;
+    }
+
+    public String generateUUID(){
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString().substring(0,8);
+        return randomUUIDString;
+    }
+    
 
 }
 
