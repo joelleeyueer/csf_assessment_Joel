@@ -6,3 +6,4 @@
 /Users/joellee/Desktop/0_CSF/csf_assessment_Joel/archive_backend/src/main/java/ibf2022/batch2/csf/backend/BackendApplication.java
 /Users/joellee/Desktop/0_CSF/csf_assessment_Joel/archive_backend/src/main/java/ibf2022/batch2/csf/backend/repositories/ArchiveRepository.java
 /Users/joellee/Desktop/0_CSF/csf_assessment_Joel/archive_backend/src/main/java/ibf2022/batch2/csf/backend/configs/AppConfig.java
+/Users/joellee/Desktop/0_CSF/csf_assessment_Joel/archive_backend/src/main/java/ibf2022/batch2/csf/backend/services/UploadToS3Service.java

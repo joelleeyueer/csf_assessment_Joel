@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import ibf2022.batch2.csf.backend.repositories.ImageRepository;
 import ibf2022.batch2.csf.backend.services.FileVerificationService;
 
 @RestController
@@ -23,6 +24,9 @@ public class UploadController {
 
 	@Autowired
 	private FileVerificationService fileVerificationService;
+
+	@Autowired
+	private ImageRepository imageRepository;
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -56,6 +60,8 @@ public class UploadController {
                 }
             }
         }
+
+		imageRepository.upload(file);
 
 		return ResponseEntity.ok("File and data uploaded successfully");
 		} else {
