@@ -1,4 +1,6 @@
 /Users/joellee/Desktop/0_CSF/csf_assessment_Joel/archive_backend/src/main/java/ibf2022/batch2/csf/backend/repositories/ImageRepository.java
+/Users/joellee/Desktop/0_CSF/csf_assessment_Joel/archive_backend/src/main/java/ibf2022/batch2/csf/backend/services/FileVerificationService.java
+/Users/joellee/Desktop/0_CSF/csf_assessment_Joel/archive_backend/src/main/java/ibf2022/batch2/csf/backend/configs/S3Config.java
 /Users/joellee/Desktop/0_CSF/csf_assessment_Joel/archive_backend/src/main/java/ibf2022/batch2/csf/backend/configs/EnableCors.java
 /Users/joellee/Desktop/0_CSF/csf_assessment_Joel/archive_backend/src/main/java/ibf2022/batch2/csf/backend/controllers/UploadController.java
 /Users/joellee/Desktop/0_CSF/csf_assessment_Joel/archive_backend/src/main/java/ibf2022/batch2/csf/backend/BackendApplication.java
