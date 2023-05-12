@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -83,6 +85,18 @@ public class UploadController {
 
 		} else {
 			return ResponseEntity.badRequest().body("No file uploaded");
+		}
+	}
+
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/bundle/{bundleID}")
+	public ResponseEntity<String> getBundleByBundleId(@PathVariable String bundleID) {
+		JsonObject incomingArchive = archiveRepository.getBundleByBundleId(bundleID);
+
+		if (incomingArchive != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(incomingArchive.toString());
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bundle archive for "+ bundleID + " not found");
 		}
 	}
 }
